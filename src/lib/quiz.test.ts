@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { scoreQuiz, shuffle } from "./quiz";
-import { CATEGORIES } from "@/data/quizzes";
+import { CATEGORIES, type Question } from "@/data/quizzes";
 
-const qs = CATEGORIES[0].questions.slice(0, 5);
+const qs = CATEGORIES[0]!.questions.slice(0, 5) as [Question, Question, Question, Question, Question];
 
 describe("quiz logic", () => {
   it("scores correct, incorrect and unanswered accurately", () => {

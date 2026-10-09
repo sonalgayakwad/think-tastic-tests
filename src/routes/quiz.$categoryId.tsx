@@ -70,7 +70,7 @@ function QuizRunner({ categoryId, difficulty, onRestart }: { categoryId: string;
     const result: QuizResult = {
       categoryId, categoryName: category.name, difficulty, ...s, timedOut,
       timeTaken: totalTime.current - timeLeft,
-      review: questions.map((q, i) => ({ question: q.question, options: q.options, correct: q.answer, selected: answers[i] })),
+      review: questions.map((q, i) => ({ question: q.question, options: q.options, correct: q.answer, selected: answers[i] ?? null })),
       completedAt: new Date().toISOString(),
     };
     try { localStorage.setItem(RESULT_KEY, JSON.stringify(result)); } catch { /* storage unavailable */ }
@@ -88,7 +88,7 @@ function QuizRunner({ categoryId, difficulty, onRestart }: { categoryId: string;
     return <div className="flex min-h-[60vh] items-center justify-center gap-2 text-muted-foreground"><Loader2 className="h-5 w-5 animate-spin" /> Preparing your quiz…</div>;
   }
 
-  const q = questions[index];
+  const q = questions[index]!;
   const answered = answers.filter((a) => a != null).length;
   const last = index === questions.length - 1;
   const low = timeLeft <= 15;
