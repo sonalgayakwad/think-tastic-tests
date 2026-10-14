@@ -27,8 +27,10 @@ function Contact() {
   const [values, setValues] = useState<Fields>({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof Fields, string>>>({});
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState("");
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const r = schema.safeParse(values);
     if (!r.success) {
@@ -38,8 +40,30 @@ function Contact() {
       return;
     }
     setErrors({});
-    setSent(true);
-    setValues({ name: "", email: "", message: "" });
+    setSending(true);
+    setSendError("");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: "845caf67-932d-46de-927b-6dd5789f26be",
+          subject: `QuizNova message from ${values.name}`,
+          from_name: "QuizNova Contact Form",
+          name: values.name,
+          email: values.email,
+          message: values.message,
+        }),
+      });
+      const json = await res.json().catch(() => null);
+      if (!res.ok || !json?.success) throw new Error(json?.message || "Could not send your message. Please try again.");
+      setSent(true);
+      setValues({ name: "", email: "", message: "" });
+    } catch (err) {
+      setSendError(err instanceof Error ? err.message : "Could not send your message. Please try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   const field = (k: keyof Fields) => ({
