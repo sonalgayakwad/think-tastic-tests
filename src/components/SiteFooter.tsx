@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Heart } from "lucide-react";
+import { Heart, MapPin } from "lucide-react";
 import { Logo } from "./Logo";
 import { NAV } from "./SiteHeader";
 
@@ -24,6 +24,7 @@ export function SiteFooter() {
         <div>
           <h4 className="mb-3 text-sm font-bold uppercase tracking-wider">Get in touch</h4>
           <p className="text-sm text-muted-foreground">Questions or feedback about QuizNova?</p>
+          <p className="mt-3 flex items-center gap-2 text-sm font-semibold"><MapPin className="h-4 w-4 text-primary" /> Amravati, Maharashtra, India</p>
           <Link to="/contact" className="mt-3 inline-flex rounded-xl bg-secondary px-4 py-2 text-sm font-semibold text-primary hover:bg-accent">
             Go to Contact
           </Link>

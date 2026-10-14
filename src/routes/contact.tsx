@@ -56,7 +56,7 @@ function Contact() {
         <div className="space-y-4">
           {[
             [Mail, "Email", "sonalgayakwad10@gmail.com"],
-            [MapPin, "Location", "Sample Campus, Demo City"],
+            [MapPin, "Location", "Amravati, Maharashtra, India"],
             [Clock, "Response time", "Within 2 working days"],
           ].map(([I, t, d]) => {
             const Icon = I as typeof Mail;
@@ -67,7 +67,7 @@ function Contact() {
               </div>
             );
           })}
-          <p className="text-xs text-muted-foreground">Contact details shown are fictional sample information for this demo project.</p>
+          <p className="text-xs text-muted-foreground">Based in Amravati, Maharashtra — messages are answered by email.</p>
         </div>
 
         <form onSubmit={onSubmit} noValidate className="space-y-4 rounded-2xl border bg-card p-6 shadow-card">
