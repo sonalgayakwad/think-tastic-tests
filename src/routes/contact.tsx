@@ -98,8 +98,11 @@ function Contact() {
           {sent && (
             <div role="status" className="flex items-start gap-3 rounded-xl bg-success/10 p-4 text-sm">
               <CheckCircle2 className="h-5 w-5 shrink-0 text-success" />
-              <span>Thank you! Your message passed validation. <span className="text-muted-foreground">(Demo only — messages are not sent or stored.)</span></span>
+              <span>Thank you! Your message has been sent — Sonal will get back to you at the email you provided.</span>
             </div>
+          )}
+          {sendError && (
+            <div role="alert" className="rounded-xl bg-destructive/10 p-4 text-sm text-destructive">{sendError}</div>
           )}
           <div>
             <label htmlFor="name" className="mb-1 block text-sm font-semibold">Name *</label>
