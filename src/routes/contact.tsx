@@ -55,7 +55,7 @@ function Contact() {
       <div className="mt-12 grid gap-8 md:grid-cols-[1fr_1.5fr]">
         <div className="space-y-4">
           {[
-            [Mail, "Email", "hello@quiznova.example"],
+            [Mail, "Email", "sonalgayakwad10@gmail.com"],
             [MapPin, "Location", "Sample Campus, Demo City"],
             [Clock, "Response time", "Within 2 working days"],
           ].map(([I, t, d]) => {
