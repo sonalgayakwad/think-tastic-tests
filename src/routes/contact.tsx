@@ -67,7 +67,7 @@ function Contact() {
               </div>
             );
           })}
-          <p className="text-xs text-muted-foreground">Contact details shown are fictional sample information for this demo project.</p>
+          <p className="text-xs text-muted-foreground">Based in Amravati, Maharashtra — messages are answered by email.</p>
         </div>
 
         <form onSubmit={onSubmit} noValidate className="space-y-4 rounded-2xl border bg-card p-6 shadow-card">
