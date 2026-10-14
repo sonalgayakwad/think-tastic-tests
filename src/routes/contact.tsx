@@ -56,7 +56,7 @@ function Contact() {
         <div className="space-y-4">
           {[
             [Mail, "Email", "sonalgayakwad10@gmail.com"],
-            [MapPin, "Location", "Sample Campus, Demo City"],
+            [MapPin, "Location", "Amravati, Maharashtra, India"],
             [Clock, "Response time", "Within 2 working days"],
           ].map(([I, t, d]) => {
             const Icon = I as typeof Mail;
