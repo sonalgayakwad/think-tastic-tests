@@ -27,8 +27,10 @@ function Contact() {
   const [values, setValues] = useState<Fields>({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof Fields, string>>>({});
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState("");
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const r = schema.safeParse(values);
     if (!r.success) {
@@ -38,8 +40,30 @@ function Contact() {
       return;
     }
     setErrors({});
-    setSent(true);
-    setValues({ name: "", email: "", message: "" });
+    setSending(true);
+    setSendError("");
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: "845caf67-932d-46de-927b-6dd5789f26be",
+          subject: `QuizNova message from ${values.name}`,
+          from_name: "QuizNova Contact Form",
+          name: values.name,
+          email: values.email,
+          message: values.message,
+        }),
+      });
+      const json = await res.json().catch(() => null);
+      if (!res.ok || !json?.success) throw new Error(json?.message || "Could not send your message. Please try again.");
+      setSent(true);
+      setValues({ name: "", email: "", message: "" });
+    } catch (err) {
+      setSendError(err instanceof Error ? err.message : "Could not send your message. Please try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   const field = (k: keyof Fields) => ({
@@ -74,8 +98,11 @@ function Contact() {
           {sent && (
             <div role="status" className="flex items-start gap-3 rounded-xl bg-success/10 p-4 text-sm">
               <CheckCircle2 className="h-5 w-5 shrink-0 text-success" />
-              <span>Thank you! Your message passed validation. <span className="text-muted-foreground">(Demo only — messages are not sent or stored.)</span></span>
+              <span>Thank you! Your message has been sent — Sonal will get back to you at the email you provided.</span>
             </div>
+          )}
+          {sendError && (
+            <div role="alert" className="rounded-xl bg-destructive/10 p-4 text-sm text-destructive">{sendError}</div>
           )}
           <div>
             <label htmlFor="name" className="mb-1 block text-sm font-semibold">Name *</label>
@@ -92,7 +119,7 @@ function Contact() {
             <textarea id="message" rows={5} {...field("message")} placeholder="Write your message…" />
             {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message}</p>}
           </div>
-          <button type="submit" className="w-full rounded-xl bg-gradient-brand py-3 font-semibold text-primary-foreground shadow-glow">Send Message</button>
+          <button type="submit" disabled={sending} className="w-full rounded-xl bg-gradient-brand py-3 font-semibold text-primary-foreground shadow-glow disabled:opacity-60">{sending ? "Sending…" : "Send Message"}</button>
         </form>
       </div>
     </section>
