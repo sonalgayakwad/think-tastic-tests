@@ -119,7 +119,7 @@ function Contact() {
             <textarea id="message" rows={5} {...field("message")} placeholder="Write your message…" />
             {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message}</p>}
           </div>
-          <button type="submit" className="w-full rounded-xl bg-gradient-brand py-3 font-semibold text-primary-foreground shadow-glow">Send Message</button>
+          <button type="submit" disabled={sending} className="w-full rounded-xl bg-gradient-brand py-3 font-semibold text-primary-foreground shadow-glow disabled:opacity-60">{sending ? "Sending…" : "Send Message"}</button>
         </form>
       </div>
     </section>
